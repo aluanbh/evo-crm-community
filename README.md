@@ -86,9 +86,9 @@ The Evo CRM Community platform is composed of 6 independent services:
 ### Design principles (Community Edition)
 
 - **Single-tenant** — one account, no multi-tenancy overhead
-- **No super-admin** — all configuration via seed data and environment variables
+- **Installation owner** — a single `super_admin` (created by the setup wizard) holds installation-level configuration (SMTP, Storage, OpenAI, etc.); all other configuration is via seed data and environment variables
 - **No billing / plans** — all limits removed, features unlocked by default
-- **Role hierarchy**: `account_owner` and `agent` — no intermediate roles
+- **Role hierarchy**: `account_owner` + `agent`, plus the single installation-owner `super_admin` — no intermediate roles (see the `evo-auth-service-community` RBAC seed and `Role::ADMIN_ROLE_KEYS` for the authoritative role model)
 - **Account resolution** via token — no `account-id` header required between services
 
 ### Companion services (independent versioning)
