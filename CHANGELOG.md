@@ -9,6 +9,10 @@ This repository is the umbrella of the CRM Community family: it orchestrates the
 
 ## [Unreleased]
 
+### Changed
+
+- **Docs — README role model corrected (CRM-180)** — the "Design principles" section claimed *"No super-admin"* and a closed `account_owner` + `agent` hierarchy with "no intermediate roles". Both were false: `evo-auth-service-community` seeds a third role, `super_admin` (the only holder of `installation_configs.manage`), and `account_owner` holds `roles.create`, so custom roles exist at runtime. Replaced by a **Roles** subsection that states the real model, that `super_admin` has no single-holder guarantee (audit `user_roles` instead of assuming one installation owner), and that `Role::ADMIN_ROLE_KEYS` is an admin-bypass allowlist rather than the role model.
+
 ## [v1.0.0] - 2026-07-15
 
 **The first stable release of the CRM Community family.** v1.0.0 promotes `v1.0.0-rc7` to GA after a focused stabilization/hardening pass — no new features of size; the window is bug fixes, security hardening, configuration-resolution corrections, multi-tenant/RLS wiring, and a frontend UI-redesign wave. ~135 commits across the family (CRM 43, processor 37, frontend 36, auth 11 net-new, core 8; `evo-bot-runtime` and `evo-flow-community` are alignment-only re-tags with zero delta). **No new database migrations in any service.**
