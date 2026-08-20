@@ -159,6 +159,8 @@ services:
       REDIS_URL: redis://:evoai_redis_pass@evo_redis:6379/0
       EVO_AUTH_SERVICE_URL: http://evo_auth:3001
       EVO_AI_CORE_SERVICE_URL: http://evo_core:5555
+      # Same Fernet key evo_core/evo_processor use as ENCRYPTION_KEY (AI credentials).
+      EVO_AI_ENCRYPTION_KEY: XoQPOBw2FrzjQS11utERG9qO2MsAnXFxlhIns_uUxRk=
       BACKEND_URL: "${BACKEND_URL:?BACKEND_URL must be set to a non-localhost URL for the review env (e.g. http://host.docker.internal:3030)}"
       FRONTEND_URL: "${FRONTEND_URL:?FRONTEND_URL must be set to a non-localhost URL for the review env (e.g. http://host.docker.internal:5173)}"
       # CORS origins are the browser's Origin header (Vite serves on localhost:5173 from the host machine);
@@ -205,6 +207,8 @@ services:
       REDIS_URL: redis://:evoai_redis_pass@evo_redis:6379/0
       EVO_AUTH_SERVICE_URL: http://evo_auth:3001
       EVO_AI_CORE_SERVICE_URL: http://evo_core:5555
+      # Same Fernet key evo_core/evo_processor use as ENCRYPTION_KEY (AI credentials).
+      EVO_AI_ENCRYPTION_KEY: XoQPOBw2FrzjQS11utERG9qO2MsAnXFxlhIns_uUxRk=
       BOT_RUNTIME_URL: http://evo_bot_runtime:8080
       BOT_RUNTIME_SECRET: evo-bot-runtime-dev-secret
       BOT_RUNTIME_POSTBACK_BASE_URL: http://evo_crm:3000
