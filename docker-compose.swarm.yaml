@@ -15,7 +15,7 @@
 ##        - JWT_SECRET_KEY .......... auth, auth_sidekiq, crm, crm_sidekiq, core
 ##        - EVOAI_CRM_API_TOKEN ..... auth, auth_sidekiq, crm, crm_sidekiq, processor
 ##        - DOORKEEPER_JWT_SECRET_KEY  auth, auth_sidekiq
-##        - ENCRYPTION_KEY .......... core, processor
+##        - ENCRYPTION_KEY .......... core, processor; crm + crm_sidekiq (como EVO_AI_ENCRYPTION_KEY)
 ##        - BOT_RUNTIME_SECRET ...... crm, crm_sidekiq, bot_runtime
 ##        - AUTH_APIKEY_INTEGRATION_LOCAL  crm, crm_sidekiq, evoflow
 ##        - CLICKHOUSE_PASSWORD ..... clickhouse, evoflow
@@ -238,6 +238,7 @@ services:
       - SECRET_KEY_BASE=        # Mesmo valor de SECRET_KEY_BASE usado nos demais serviços
       - JWT_SECRET_KEY=         # Mesmo valor de JWT_SECRET_KEY usado nos demais serviços
       - EVOAI_CRM_API_TOKEN=    # Mesmo valor de EVOAI_CRM_API_TOKEN usado nos demais serviços
+      - EVO_AI_ENCRYPTION_KEY=  # Mesma chave Fernet do ENCRYPTION_KEY (core/processor) — cifra credenciais de IA
 
     ## 🗄️ PostgreSQL
       - POSTGRES_HOST=pgvector
@@ -316,6 +317,7 @@ services:
       - SECRET_KEY_BASE=        # Mesmo valor de SECRET_KEY_BASE usado nos demais serviços
       - JWT_SECRET_KEY=         # Mesmo valor de JWT_SECRET_KEY usado nos demais serviços
       - EVOAI_CRM_API_TOKEN=    # Mesmo valor de EVOAI_CRM_API_TOKEN usado nos demais serviços
+      - EVO_AI_ENCRYPTION_KEY=  # Mesma chave Fernet do ENCRYPTION_KEY (core/processor) — cifra credenciais de IA
 
     ## 🗄️ PostgreSQL
       - POSTGRES_HOST=pgvector

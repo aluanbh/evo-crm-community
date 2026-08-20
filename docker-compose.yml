@@ -132,6 +132,8 @@ services:
       POSTGRES_HOST: postgres
       EVO_AUTH_SERVICE_URL: http://evo-auth:3001
       EVO_AI_CORE_SERVICE_URL: http://evo-core:5555
+      # Same Fernet key core/processor read as ENCRYPTION_KEY; the CRM encrypts AI credentials with it.
+      EVO_AI_ENCRYPTION_KEY: ${ENCRYPTION_KEY:-XoQPOBw2FrzjQS11utERG9qO2MsAnXFxlhIns_uUxRk=}
       BOT_RUNTIME_URL: http://evo-bot-runtime:8080
       BOT_RUNTIME_SECRET: ${BOT_RUNTIME_SECRET:-evo-bot-runtime-dev-secret}
       BOT_RUNTIME_POSTBACK_BASE_URL: http://evo-crm:3000
@@ -175,6 +177,8 @@ services:
       POSTGRES_HOST: postgres
       EVO_AUTH_SERVICE_URL: http://evo-auth:3001
       EVO_AI_CORE_SERVICE_URL: http://evo-core:5555
+      # Same Fernet key core/processor read as ENCRYPTION_KEY; the CRM encrypts AI credentials with it.
+      EVO_AI_ENCRYPTION_KEY: ${ENCRYPTION_KEY:-XoQPOBw2FrzjQS11utERG9qO2MsAnXFxlhIns_uUxRk=}
       BOT_RUNTIME_URL: http://evo-bot-runtime:8080
       BOT_RUNTIME_SECRET: ${BOT_RUNTIME_SECRET:-evo-bot-runtime-dev-secret}
       BOT_RUNTIME_POSTBACK_BASE_URL: http://evo-crm:3000
