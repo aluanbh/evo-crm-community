@@ -611,7 +611,7 @@ services:
   ## e roda as migrations. O banco do CRM (evocrm) não é tocado.
   ## O swarm ignora depends_on → o boot espera o ClickHouse por conta própria.
   evocrm_evoflow:
-    image: evoapicloud/evo-flow-community:develop
+    image: evoapicloud/evo-flow-community:latest
     command:
       - sh
       - -c
