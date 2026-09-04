@@ -1,0 +1,441 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, act } from '@testing-library/react';
+import Chat from '../Chat';
+import { CONVERSATION_SEGMENTS } from '@/components/chat/chat-sidebar/conversationSegmentsHelpers';
+import type { Conversation } from '@/types/chat/api';
+
+// ─── Mutable test state ───────────────────────────────────────────────────────
+const mockState = vi.hoisted(() => ({
+  selectedConversationId: null as string | null,
+}));
+
+const mockHookResolve = vi.hoisted(() => ({
+  fn: vi.fn<[Conversation, (() => Promise<void>)?], Promise<void>>(),
+}));
+
+const capturedProps = vi.hoisted(() => ({
+  onMarkAsResolved: null as ((conv: Conversation) => Promise<void>) | null,
+}));
+
+const capturedHeaderProps = vi.hoisted(() => ({
+  onMarkAsResolved: null as ((conv: Conversation) => Promise<void>) | null,
+  conversation: null as Conversation | null,
+  onAssignAgent: null as ((conv: Conversation) => Promise<void>) | null,
+  onAssignTeam: null as ((conv: Conversation) => Promise<void>) | null,
+  onAssignTag: null as ((conv: Conversation) => Promise<void>) | null,
+}));
+
+const capturedAssignmentProps = vi.hoisted(() => ({
+  description: null as string | null,
+}));
+
+const mockSelectedConversation = vi.hoisted(() => ({
+  value: null as Conversation | null,
+}));
+
+// ─── react-router-dom ─────────────────────────────────────────────────────────
+const mockNavigate = vi.hoisted(() => vi.fn());
+
+// Mutable: the badge effect must react to the param, not to mount.
+const mockSearch = vi.hoisted(() => ({
+  params: new URLSearchParams(),
+  setParams: vi.fn(),
+}));
+
+vi.mock('react-router-dom', () => ({
+  useParams: () => ({ conversationId: undefined }),
+  useNavigate: () => mockNavigate,
+  useSearchParams: () => [mockSearch.params, mockSearch.setParams],
+}));
+
+// ─── i18n ─────────────────────────────────────────────────────────────────────
+vi.mock('@/hooks/useLanguage', () => ({
+  useLanguage: () => ({
+    // Echoes the {{name}} argument so a test can assert what was interpolated.
+    t: (k: string, opts?: { name?: string }) => (opts?.name ? `${k}|${opts.name}` : k),
+  }),
+}));
+
+// ─── Permissions ──────────────────────────────────────────────────────────────
+vi.mock('@/contexts/PermissionsContext', () => ({
+  usePermissions: () => ({ can: vi.fn().mockReturnValue(true), isReady: true }),
+}));
+
+// ─── Chat context ─────────────────────────────────────────────────────────────
+const mockSelectConversation = vi.fn().mockResolvedValue(undefined);
+
+vi.mock('@/contexts/chat/ChatContext', () => ({
+  useChatContext: () => ({
+    conversations: {
+      state: {
+        selectedConversationId: mockState.selectedConversationId,
+        conversationsLoading: false,
+        conversationsError: null,
+        conversations: [],
+      },
+      selectConversation: mockSelectConversation,
+      getConversation: vi.fn().mockReturnValue(null),
+      getUnreadCount: vi.fn().mockReturnValue(0),
+      loadConversations: vi.fn().mockResolvedValue(undefined),
+      // Chat.tsx:170 auto-marca a conversa selecionada como lida (silencioso) ao
+      // abri-la — o mock precisa expor markAsRead (retorna Promise p/ o .catch).
+      markAsRead: vi.fn().mockResolvedValue(undefined),
+    },
+    messages: {
+      loadMessages: vi.fn(),
+      loadMoreMessages: vi.fn(),
+      state: { messages: [], messagesLoading: false },
+    },
+    selectedConversation: mockSelectedConversation.value,
+    selectedMessages: [],
+  }),
+}));
+
+// ─── Conversation handlers hook ───────────────────────────────────────────────
+vi.mock('@/hooks/chat/useConversationHandlers', () => ({
+  useConversationHandlers: () => ({
+    handleMarkAsResolved: mockHookResolve.fn,
+    handleMarkAsRead: vi.fn().mockResolvedValue(undefined),
+    handleMarkAsUnread: vi.fn().mockResolvedValue(undefined),
+    handlePostpone: vi.fn().mockResolvedValue(undefined),
+    handleMarkAsOpen: vi.fn().mockResolvedValue(undefined),
+    handleMarkAsSnoozed: vi.fn().mockResolvedValue(undefined),
+    handleSetPriority: vi.fn().mockResolvedValue(undefined),
+    handlePinConversation: vi.fn().mockResolvedValue(undefined),
+    handleUnpinConversation: vi.fn().mockResolvedValue(undefined),
+    handleArchiveConversation: vi.fn().mockResolvedValue(undefined),
+    handleUnarchiveConversation: vi.fn().mockResolvedValue(undefined),
+    handleDeleteConversation: vi.fn(),
+  }),
+}));
+
+// ─── Assignment handlers hook ─────────────────────────────────────────────────
+vi.mock('@/hooks/chat/useAssignmentHandlers', () => ({
+  useAssignmentHandlers: () => ({
+    handleAssignAgent: (conversation: Conversation) => ({ conversation, type: 'agent' }),
+    handleAssignTeam: (conversation: Conversation) => ({ conversation, type: 'team' }),
+    handleAssignTag: (conversation: Conversation) => ({ conversation, type: 'label' }),
+    handleAssignmentConfirm: vi.fn(),
+    users: [],
+    teams: [],
+    labels: [],
+    isLoadingAssignmentData: false,
+  }),
+}));
+
+// ─── Filter handlers hook ─────────────────────────────────────────────────────
+const mockFilterHandlers = vi.hoisted(() => ({
+  handleApplyFilters: vi.fn().mockResolvedValue(undefined),
+}));
+
+vi.mock('@/hooks/chat/useFilterHandlers', () => ({
+  useFilterHandlers: () => ({
+    handleApplyFilters: mockFilterHandlers.handleApplyFilters,
+    handleClearFilters: vi.fn().mockResolvedValue(undefined),
+    reloadCurrentFilters: vi.fn().mockResolvedValue(undefined),
+  }),
+}));
+
+// ─── Storage utils ────────────────────────────────────────────────────────────
+vi.mock('@/utils/storage/filtersStorage', () => ({
+  loadConversationFilters: vi.fn().mockReturnValue([]),
+  getDefaultFilter: vi.fn().mockReturnValue([]),
+}));
+
+// ─── App store ────────────────────────────────────────────────────────────────
+vi.mock('@/store/appDataStore', () => ({
+  useAppDataStore: (selector: (s: any) => any) => selector({ fetchLabels: vi.fn() }),
+}));
+
+// ─── Services ─────────────────────────────────────────────────────────────────
+vi.mock('@/services/contacts/labelsService', () => ({
+  labelsService: { createLabel: vi.fn() },
+}));
+
+// ─── Sub-components — capture onMarkAsResolved from ChatSidebar ───────────────
+vi.mock('@/components/chat/chat-sidebar/ChatSidebar', () => ({
+  default: (props: any) => {
+    capturedProps.onMarkAsResolved = props.onMarkAsResolved;
+    return <div data-testid="chat-sidebar" />;
+  },
+}));
+
+vi.mock('@/components/chat/chat-header/ChatHeader', () => ({
+  default: (props: any) => {
+    capturedHeaderProps.onMarkAsResolved = props.onMarkAsResolved;
+    capturedHeaderProps.conversation = props.conversation;
+    capturedHeaderProps.onAssignAgent = props.onAssignAgent;
+    capturedHeaderProps.onAssignTeam = props.onAssignTeam;
+    capturedHeaderProps.onAssignTag = props.onAssignTag;
+    return <div data-testid="chat-header" />;
+  },
+}));
+
+vi.mock('@/components/chat/assignment/AssignmentModal', () => ({
+  default: (props: any) => {
+    capturedAssignmentProps.description = props.description;
+    return <div data-testid="assignment-modal" />;
+  },
+}));
+
+vi.mock('@/components/chat/chat-area/ChatArea', () => ({
+  default: () => <div data-testid="chat-area" />,
+}));
+
+vi.mock('@/components/chat/chat-tabs/ChatTabs', () => ({
+  default: () => <div data-testid="chat-tabs" />,
+}));
+
+vi.mock('../../../components/ErrorBoundary', () => ({
+  default: ({ children }: any) => <>{children}</>,
+}));
+
+vi.mock('@/tours', () => ({
+  ChatTour: () => null,
+}));
+
+vi.mock('@evoapi/design-system/alert-dialog', () => ({
+  AlertDialog: ({ children }: any) => <>{children}</>,
+  AlertDialogContent: ({ children }: any) => <>{children}</>,
+  AlertDialogHeader: ({ children }: any) => <>{children}</>,
+  AlertDialogTitle: ({ children }: any) => <>{children}</>,
+  AlertDialogDescription: ({ children }: any) => <>{children}</>,
+  AlertDialogFooter: ({ children }: any) => <>{children}</>,
+  AlertDialogAction: ({ children, onClick }: any) => (
+    <button type="button" onClick={onClick}>
+      {children}
+    </button>
+  ),
+  AlertDialogCancel: ({ children }: any) => <button type="button">{children}</button>,
+}));
+
+vi.mock('sonner', () => ({
+  toast: { error: vi.fn(), success: vi.fn() },
+}));
+
+// ─── Fixtures ─────────────────────────────────────────────────────────────────
+const selectedConv: Conversation = {
+  id: 'conv-selected',
+  uuid: 'uuid-selected',
+  status: 'open',
+} as any;
+
+const otherConv: Conversation = {
+  id: 'conv-other',
+  uuid: 'uuid-other',
+  status: 'open',
+} as any;
+
+const conversationToAssign: Conversation = {
+  id: 'conv-selected',
+  uuid: 'uuid-selected',
+  status: 'open',
+  contact: { id: 'contact-1', name: 'Maria Compradora' },
+  assignee: { id: 'user-1', name: 'Nickolas Atendente' },
+  team: { id: 'team-1', name: 'Time Comercial' },
+  labels: [
+    { id: 'label-1', title: 'onboarding_ativo' },
+    { id: 'label-2', title: 'atendimento_ia' },
+  ],
+} as any;
+
+// ─── Tests ────────────────────────────────────────────────────────────────────
+describe('Chat — handleMarkAsResolved navigation behavior', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    capturedProps.onMarkAsResolved = null;
+    capturedHeaderProps.onMarkAsResolved = null;
+    capturedHeaderProps.conversation = null;
+    mockState.selectedConversationId = null;
+    mockSelectedConversation.value = null;
+    mockHookResolve.fn.mockResolvedValue(undefined);
+    mockSelectConversation.mockResolvedValue(undefined);
+  });
+
+  it('clears URL and selection when resolving the currently-selected conversation', async () => {
+    mockState.selectedConversationId = 'uuid-selected';
+
+    const { unmount } = render(<Chat />);
+
+    await act(async () => {
+      await capturedProps.onMarkAsResolved!(selectedConv);
+    });
+
+    expect(mockNavigate).toHaveBeenCalledWith('/conversations', { replace: true });
+    expect(mockSelectConversation).toHaveBeenCalledWith(null);
+
+    unmount();
+  });
+
+  it('does not navigate when resolving a non-selected conversation', async () => {
+    mockState.selectedConversationId = 'uuid-selected';
+
+    const { unmount } = render(<Chat />);
+
+    await act(async () => {
+      await capturedProps.onMarkAsResolved!(otherConv);
+    });
+
+    expect(mockNavigate).not.toHaveBeenCalled();
+    expect(mockSelectConversation).not.toHaveBeenCalled();
+
+    unmount();
+  });
+
+  it('does not navigate when no conversation is selected', async () => {
+    mockState.selectedConversationId = null;
+
+    const { unmount } = render(<Chat />);
+
+    await act(async () => {
+      await capturedProps.onMarkAsResolved!(selectedConv);
+    });
+
+    expect(mockNavigate).not.toHaveBeenCalled();
+
+    unmount();
+  });
+
+  it('clears URL and selection when resolving via ChatHeader (primary resolve path)', async () => {
+    mockState.selectedConversationId = 'uuid-selected';
+    mockSelectedConversation.value = selectedConv;
+
+    const { unmount } = render(<Chat />);
+
+    expect(capturedHeaderProps.conversation).toEqual(selectedConv);
+
+    await act(async () => {
+      await capturedHeaderProps.onMarkAsResolved!(selectedConv);
+    });
+
+    expect(mockNavigate).toHaveBeenCalledWith('/conversations', { replace: true });
+    expect(mockSelectConversation).toHaveBeenCalledWith(null);
+
+    unmount();
+  });
+
+  it('does not navigate when resolve fails on the selected conversation', async () => {
+    mockState.selectedConversationId = 'uuid-selected';
+    mockHookResolve.fn.mockRejectedValueOnce(new Error('API error'));
+
+    const { unmount } = render(<Chat />);
+
+    await act(async () => {
+      await capturedProps.onMarkAsResolved!(selectedConv);
+    });
+
+    expect(mockNavigate).not.toHaveBeenCalled();
+    expect(mockSelectConversation).not.toHaveBeenCalled();
+
+    unmount();
+  });
+});
+
+// The sidebar badge routes to /conversations?segment=unanswered.
+describe('Chat — ?segment= preset (EVO-1963)', () => {
+  const unansweredPreset = CONVERSATION_SEGMENTS.find(s => s.id === 'unanswered')!.preset;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockState.selectedConversationId = null;
+    mockSelectedConversation.value = null;
+    mockSearch.params = new URLSearchParams();
+  });
+
+  it('applies the segment preset and strips the param from the URL', async () => {
+    mockSearch.params = new URLSearchParams('segment=unanswered');
+
+    const { unmount } = render(<Chat />);
+    await act(async () => {});
+
+    expect(mockFilterHandlers.handleApplyFilters).toHaveBeenCalledWith(unansweredPreset);
+    expect(mockSearch.setParams).toHaveBeenCalled();
+
+    unmount();
+  });
+
+  // No remount here — only a rerender with the new param, which is what clicking
+  // the badge from the conversations screen does.
+  it('applies the preset when the param appears without a remount', async () => {
+    const { rerender, unmount } = render(<Chat />);
+    await act(async () => {});
+
+    expect(mockFilterHandlers.handleApplyFilters).not.toHaveBeenCalledWith(unansweredPreset);
+
+    mockSearch.params = new URLSearchParams('segment=unanswered');
+    await act(async () => {
+      rerender(<Chat />);
+    });
+
+    expect(mockFilterHandlers.handleApplyFilters).toHaveBeenCalledWith(unansweredPreset);
+
+    unmount();
+  });
+
+  it('falls back to the saved filters when the segment is unknown', async () => {
+    mockSearch.params = new URLSearchParams('segment=nope');
+
+    const { unmount } = render(<Chat />);
+    await act(async () => {});
+
+    // Both storage mocks return [] — what matters is that the list loads at all.
+    expect(mockFilterHandlers.handleApplyFilters).toHaveBeenCalledWith([]);
+    expect(mockFilterHandlers.handleApplyFilters).not.toHaveBeenCalledWith(unansweredPreset);
+
+    unmount();
+  });
+});
+
+// CRM-388: the three "conversation with {{name}}" phrases name the interlocutor,
+// not what is being assigned (the label list, the assignee, the team).
+describe('Chat — assignment modal subtitle names the contact (CRM-388)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    capturedAssignmentProps.description = null;
+    capturedHeaderProps.onAssignAgent = null;
+    capturedHeaderProps.onAssignTeam = null;
+    capturedHeaderProps.onAssignTag = null;
+    mockState.selectedConversationId = 'uuid-selected';
+    mockSelectedConversation.value = conversationToAssign;
+  });
+
+  const cases = [
+    ['label', 'onAssignTag'],
+    ['agent', 'onAssignAgent'],
+    ['team', 'onAssignTeam'],
+  ] as const;
+
+  it.each(cases)('interpolates the contact into the %s subtitle', async (type, prop) => {
+    const { unmount } = render(<Chat />);
+
+    await act(async () => {
+      await capturedHeaderProps[prop]!(conversationToAssign);
+    });
+    await act(async () => {});
+
+    expect(capturedAssignmentProps.description).toBe(
+      `assignment.${type}.description|Maria Compradora`,
+    );
+
+    unmount();
+  });
+
+  it('falls back to the contact placeholder when the contact has no name', async () => {
+    mockSelectedConversation.value = { ...conversationToAssign, contact: {} } as any;
+
+    const { unmount } = render(<Chat />);
+
+    await act(async () => {
+      await capturedHeaderProps.onAssignTag!(mockSelectedConversation.value!);
+    });
+    await act(async () => {});
+
+    expect(capturedAssignmentProps.description).toBe(
+      'assignment.label.description|assignment.label.contactFallback',
+    );
+
+    unmount();
+  });
+});

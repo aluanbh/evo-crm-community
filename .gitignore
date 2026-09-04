@@ -14,3 +14,30 @@ evolution-hub
 evo-ai-docs/
 evo-crm-enterprise/
 evo-assistant/
+evo-nexus/
+evolution-api/
+evolution-go/
+
+# ENV E SEGREDOS — NUNCA COMMITAR
+.env
+.env.*
+!.env.example
+!.env.swarm.example
+
+# DEPLOY / LOGS
+deployment-*-all-logs-*.txt
+erro.log
+*.log
+
+# SISTEMA / EDITOR
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# RUBY / PYTHON / NODE
+.rbenv/
+.rvmrc
+.venv/
+venv/
+__pycache__/

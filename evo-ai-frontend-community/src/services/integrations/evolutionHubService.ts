@@ -1,0 +1,141 @@
+// Service pra consultar o que está configurado no Evo Hub a partir
+// do CRM. Bate nos endpoints proxy do CRM (que por trás chamam o Hub
+// usando a API key configurada em /admin/app_configs/evolution_hub).
+//
+// Usado pela tela Admin → Evo Hub pra mostrar "Configuração detectada"
+// depois que o admin salva URL + API key.
+
+import api from '../core/api';
+import { extractData } from '../../utils/apiHelpers';
+
+/** GET /integrations/evolution_hub/plan response shape (subset). */
+export interface HubPlan {
+  id: string;
+  slug: string;
+  name: string;
+  description?: string;
+  allow_own_meta_app: boolean;
+  allow_shared_meta_app: boolean;
+  max_channels_total: number | null;
+  max_webhooks: number | null;
+  max_byo_credentials: number | null;
+}
+
+/** GET /integrations/evolution_hub/meta_app_options response shape. */
+export interface MetaAppOptionCred {
+  id: string;
+  name: string;
+  app_id: string;
+}
+
+export interface MetaAppOptions {
+  allowed_modes: ('shared' | 'byo')[];
+  shared_configured: boolean;
+  shared_allowed_by_plan: boolean;
+  byo_allowed_by_plan: boolean;
+  max_byo_credentials?: number | null;
+  byo_credentials: MetaAppOptionCred[];
+}
+
+/** GET /integrations/evolution_hub/channels item shape (subset). */
+export interface HubChannel {
+  id: string;
+  name: string;
+  type: 'whatsapp' | 'facebook' | 'instagram';
+  status: string;
+  channel_credentials_id?: string | null;
+  created_at?: string;
+}
+
+/** GET /integrations/evolution_hub/connect_info response shape. */
+export interface HubConnectInfo {
+  channel_id?: string;
+  channel_type?: string;
+  status?: string;
+  can_connect?: boolean;
+  connection_url?: string;
+  meta_app_id?: string;
+  meta_config_id?: string;
+  meta_scopes?: string[];
+  byo_config_missing?: boolean;
+}
+
+export interface HubWhatsappSignup {
+  phone_number_id: string;
+  waba_id: string;
+  /** Optional on the Hub (omitempty); Meta does not always return them. */
+  business_id?: string;
+  auth_code?: string;
+  /** Required by the Hub's MetaConnectRequest binding. */
+  connection_mode: string;
+}
+
+class EvolutionHubService {
+  async getConnectInfo(inboxId: string | number): Promise<HubConnectInfo> {
+    const response = await api.get(
+      `/integrations/evolution_hub/connect_info?inbox_id=${encodeURIComponent(String(inboxId))}`,
+    );
+    return extractData<HubConnectInfo>(response);
+  }
+
+  async connectWhatsapp(inboxId: string | number, signup: HubWhatsappSignup): Promise<void> {
+    await api.post('/integrations/evolution_hub/whatsapp_connect', { inbox_id: inboxId, ...signup });
+  }
+
+  /**
+   * Discards the inbox of a connection that never completed. The Hub channel is
+   * created BEFORE Meta's OAuth, so cancelling without this leaves an orphan
+   * burning plan quota. The route lives under the inbox resource because the
+   * inbox is what it deletes; the backend refuses a channel that already came up.
+   */
+  async abortConnection(inboxId: string | number): Promise<void> {
+    await api.delete(`/inboxes/${encodeURIComponent(String(inboxId))}/hub_connection`);
+  }
+
+  async getPlan(): Promise<HubPlan> {
+    const response = await api.get('/integrations/evolution_hub/plan');
+    return extractData<HubPlan>(response);
+  }
+
+  async getMetaAppOptions(): Promise<MetaAppOptions> {
+    const response = await api.get('/integrations/evolution_hub/meta_app_options');
+    return extractData<MetaAppOptions>(response);
+  }
+
+  /**
+   * Hub devolve `{ channels: [...] }` ou array direto dependendo da versão.
+   * Normalizamos pra sempre devolver array.
+   */
+  async listChannels(): Promise<HubChannel[]> {
+    const response = await api.get('/integrations/evolution_hub/channels');
+    const data = extractData<HubChannel[] | { channels?: HubChannel[]; data?: HubChannel[] }>(response);
+    return EvolutionHubService.normalizeChannels(data);
+  }
+
+  /**
+   * Canais Hub disponíveis pra serem LINKADOS a um inbox novo no CRM.
+   * Filtra no backend os já atrelados a outro inbox (evita mensagem duplicada).
+   * Optional `type` filter: 'whatsapp' | 'facebook' | 'instagram'.
+   */
+  async getAvailableChannels(type?: HubChannel['type']): Promise<HubChannel[]> {
+    const query = type ? `?type=${encodeURIComponent(type)}` : '';
+    const response = await api.get(`/integrations/evolution_hub/available_channels${query}`);
+    const data = extractData<HubChannel[] | { channels?: HubChannel[]; data?: HubChannel[] }>(response);
+    return EvolutionHubService.normalizeChannels(data);
+  }
+
+  private static normalizeChannels(
+    data: HubChannel[] | { channels?: HubChannel[]; data?: HubChannel[] } | null | undefined,
+  ): HubChannel[] {
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray((data as { channels?: HubChannel[] }).channels)) {
+      return (data as { channels: HubChannel[] }).channels;
+    }
+    if (data && Array.isArray((data as { data?: HubChannel[] }).data)) {
+      return (data as { data: HubChannel[] }).data;
+    }
+    return [];
+  }
+}
+
+export const evolutionHubService = new EvolutionHubService();
