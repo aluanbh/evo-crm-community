@@ -45,11 +45,11 @@ services:
         condition: service_healthy
     command: 'bash -c "rm -f /rails/tmp/pids/server.pid && bundle exec rails s -p 3001 -b 0.0.0.0"'
     healthcheck:
-      test: ["CMD", "true"]
-      interval: 10s
+      test: ["CMD", "sh", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/3001 || exit 1"]
+      interval: 15s
       timeout: 5s
-      retries: 3
-      start_period: 10s
+      retries: 12
+      start_period: 180s
 
   evo-auth-sidekiq:
     build:
@@ -91,6 +91,12 @@ services:
       BOT_RUNTIME_URL: 'http://evo-bot-runtime:8080'
       BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET}'
       BOT_RUNTIME_POSTBACK_BASE_URL: 'http://evo-crm:3000'
+      EVO_FLOW_ENABLED: '${EVO_FLOW_ENABLED:-true}'
+      EVO_FLOW_API_URL: '${EVO_FLOW_API_URL:-http://evo-flow:3334/api/v1}'
+      EVO_FLOW_ALLOW_INSECURE: '${EVO_FLOW_ALLOW_INSECURE:-true}'
+      RAILS_LOG_TO_STDOUT: '${RAILS_LOG_TO_STDOUT:-true}'
+      LOG_LEVEL: '${LOG_LEVEL:-info}'
+      DISABLE_TELEMETRY: '${DISABLE_TELEMETRY:-true}'
     depends_on:
       redis:
         condition: service_healthy
@@ -99,11 +105,11 @@ services:
     entrypoint: docker/entrypoints/rails.sh
     command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health/live"]
+      test: ["CMD", "sh", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/3000 || exit 1"]
       interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 120s
+      timeout: 15s
+      retries: 12
+      start_period: 360s
 
   evo-crm-sidekiq:
     build:
@@ -126,7 +132,13 @@ services:
       BOT_RUNTIME_URL: 'http://evo-bot-runtime:8080'
       BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET}'
       BOT_RUNTIME_POSTBACK_BASE_URL: 'http://evo-crm:3000'
+      EVO_FLOW_ENABLED: '${EVO_FLOW_ENABLED:-true}'
+      EVO_FLOW_API_URL: '${EVO_FLOW_API_URL:-http://evo-flow:3334/api/v1}'
+      EVO_FLOW_ALLOW_INSECURE: '${EVO_FLOW_ALLOW_INSECURE:-true}'
       RUN_MIGRATIONS: 'false'
+      RAILS_LOG_TO_STDOUT: '${RAILS_LOG_TO_STDOUT:-true}'
+      LOG_LEVEL: '${LOG_LEVEL:-info}'
+      DISABLE_TELEMETRY: '${DISABLE_TELEMETRY:-true}'
     depends_on:
       redis:
         condition: service_healthy
@@ -153,11 +165,11 @@ services:
       JWT_SECRET_KEY: '${JWT_SECRET_KEY}'
       JWT_ALGORITHM: '${JWT_ALGORITHM:-HS256}'
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:5555/health"]
-      interval: 15s
+      test: ["CMD", "sh", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/5555 || exit 1"]
+      interval: 20s
       timeout: 5s
-      retries: 5
-      start_period: 30s
+      retries: 12
+      start_period: 120s
 
   evo-processor:
     build:
@@ -184,11 +196,11 @@ services:
       evo-auth:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "sh", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8000 || exit 1"]
       interval: 30s
       timeout: 10s
-      retries: 5
-      start_period: 30s
+      retries: 10
+      start_period: 120s
 
   evo-bot-runtime:
     build:
@@ -208,11 +220,11 @@ services:
       evo-processor:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
-      interval: 15s
+      test: ["CMD", "sh", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8080 || exit 1"]
+      interval: 20s
       timeout: 5s
-      retries: 5
-      start_period: 15s
+      retries: 10
+      start_period: 60s
 
   clickhouse:
     image: 'clickhouse/clickhouse-server:latest'

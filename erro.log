@@ -1,0 +1,447 @@
+processor:
+2026-09-04 16:10:41,269 - src.services.adk.mcp_cache - INFO - Initializing MCPToolCache. Configuration: TOOLS_CACHE_ENABLED=True (mcp_cache.py:57)
+2026-09-04 16:10:41,271 - src.services.adk.mcp_cache - INFO - MCP tool cache initialized, TTL: 3600s (mcp_cache.py:89)
+Warning: OpenTelemetry could not be initialized - check Langfuse credentials
+2026-09-04 16:10:41,449 - src.services.permission_service - INFO - Permission service initialized with EvoAuthService (permission_service.py:61)
+2026-09-04 16:10:41,449 - src.services.permission_service - INFO - Global permission service initialized (permission_service.py:221)
+2026-09-04 16:10:41,898 - src.services.adk.artifacts.providers.registry - INFO - Auto-selected artifact provider: in_memory (registry.py:99)
+2026-09-04 16:10:41,898 - src.services.adk.artifacts.providers.in_memory_provider - INFO - Creating InMemoryArtifactService (bucket name ignored: files) (in_memory_provider.py:61)
+2026-09-04 16:10:41,898 - src.services.adk.artifacts.artifact_factory - INFO - Artifact service created successfully: InMemoryArtifactService (bucket: files) (artifact_factory.py:95)
+2026-09-04 16:10:41,898 - src.services.adk.artifacts.artifact_factory - INFO - Artifact service type: InMemoryArtifactService (artifact_factory.py:217)
+2026-09-04 16:10:41,898 - src.services.adk.artifacts.artifact_factory - INFO - Artifact service module: google.adk.artifacts.in_memory_artifact_service (artifact_factory.py:218)
+2026-09-04 16:10:41,898 - src.services.service_providers - INFO - Initialized artifacts service: InMemoryArtifactService from module: google.adk.artifacts.in_memory_artifact_service (service_providers.py:92)
+2026-09-04 16:10:41,902 - src.services.memory_service - INFO - HttpMemoryService initialized with base_url: http://evo-core:5555/api/v1 (memory_service.py:67)
+2026-09-04 16:10:41,963 - src.services.tools_service - INFO - Tools service initialized with config path: /app/src/config/available_tools.json (tools_service.py:57)
+2026-09-04 16:10:43,310 - src.middleware.evo_auth - INFO - EvoAuth middleware initialized (evo_auth.py:56)
+2026-09-04 16:10:43,310 - src.middleware.rate_limit - INFO - Global rate limiter initialized: 1000.0 RPS, burst 50 (rate_limit.py:147)
+2026-09-04 16:10:43,311 - src.middleware.rate_limit - INFO - Rate limiter cleanup started with interval 300s (rate_limit.py:102)
+2026-09-04 16:10:43,311 - src.middleware.rate_limit - INFO - Per-client rate limiter initialized: 100.0 RPS, burst 10 (rate_limit.py:173)
+INFO:     127.0.0.1:41650 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32782 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45572 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36346 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.0.9.2:46414 - "GET / HTTP/1.1" 404 Not Found
+INFO:     10.0.9.2:46414 - "GET /console/ HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /server HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /server-status HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:40272 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.0.9.2:46414 - "GET /about HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /login.action HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET / HTTP/1.1" 404 Not Found
+INFO:     10.0.9.2:46414 - "GET /___proxy_subdomain_whm/login HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /___proxy_subdomain_cpanel HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /v2/_catalog HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /.DS_Store HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /.env HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /.git/config HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "POST /graphql HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "POST /api HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "POST /api/graphql HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "POST /graphql/api HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "POST /api/gql HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /s/838313e24323e2232323e21353/_/%3B/META-INF/maven/com.atlassian.jira/jira-webapp-dist/pom.properties HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /config.json HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /telescope/requests HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /version HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /info.php HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /.well-known/security.txt HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /actuator/env HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /trace.axd HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /%40vite/env HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "GET /.vscode/sftp.json HTTP/1.1" 401 Unauthorized
+INFO:     10.0.9.2:46414 - "OPTIONS / HTTP/1.1" 404 Not Found
+INFO:     10.0.9.2:46414 - "GET /?rest_route=/wp/v2/users/ HTTP/1.1" 404 Not Found
+INFO:     10.0.9.2:46414 - "GET /debug/default/view?panel=config HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:59682 - "GET /health HTTP/1.1" 200 OK
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+2026-09-04 16:10:30,917 - INFO - All seeders were executed successfully
+/usr/local/lib/python3.11/site-packages/pydantic/_migration.py:283: UserWarning: `pydantic.generics:GenericModel` has been moved to `pydantic.BaseModel`.
+  warnings.warn(f'`{import_path}` has been moved to `{new_location}`.')
+INFO:     Started server process [9]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+
+
+flow:
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQBrokerAdapter] [api] broker.boot
+{
+  "action": "broker.boot",
+  "broker": "rabbitmq"
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQBrokerAdapter] [api] broker.boot
+{
+  "action": "broker.boot",
+  "broker": "rabbitmq"
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[IdempotencyService] [api] idempotency.ready
+{
+  "action": "idempotency.ready",
+  "db": 4
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentSchedulerService] [api] 🎯 Segment Scheduler Service: Skipped (api mode - segment processing disabled)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentComputationConsumer] [api] Distributed processing disabled, skipping consumer initialization
+[Nest] 7  - 09/04/2026, 4:10:18 PM    WARN ;5;3m[SegmentResultsConsumer] [api] Could not initialize Kafka results consumer: Cannot read properties of undefined (reading 'name')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentResultsConsumer] [api] Results consumer started
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🎯 Initializing Segment System...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 📊 Run Mode: api
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] ⚡ Processing Mode: scheduled
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🗄️ Storage Mode: ClickHouse (fixed)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🔧 Computation Mode: ClickHouse (fixed)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] ✅ Segment System: API only enabled (processor handled by workers)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Initializing Processing Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Run Mode: api
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Queue Mode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Write Mode: ch-sync
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[QueueProcessorFactory] [api] Creating queue processor for mode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🎯 Segment computation mode: real-time (real-time: true, cron-job: false)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🔧 Services available - SegmentInvalidationService: NO, SegmentJobService: NO
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🆔 ClickHouseStorageProcessor using ClickHouse instance: g7efxj
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🆔 ClickHouse instance g7efxj onModuleInit called
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] 🔧 KafkaService onModuleInit called
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] 🔍 Config - QueueMode: direct, WriteMode: ch-sync
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] ❌ shouldUseKafka() returned false, skipping initialization
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RedisConsumerService] [api] Initializing Redis Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RedisConsumerService] [api] Redis Consumer not started. RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] 🚀 Initializing Kafka Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] 🔍 Current RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🎯 Segment computation mode: real-time (real-time: true, cron-job: false)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🔧 Services available - SegmentInvalidationService: YES, SegmentJobService: YES
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🆔 ClickHouseStorageProcessor using ClickHouse instance: g7efxj
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] ✅ StorageProcessor created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] Should start consumer: false, Queue is Kafka: false
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] Kafka Consumer not started - RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQConsumerService] [api] Initializing RabbitMQ Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQConsumerService] [api] RabbitMQ Consumer not started (not in correct mode)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[BatchProcessorService] [api] 🚀 Segment batch processing initialized - Target: < 30s for medium segments (1K-100K contacts)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SingleContactUpdaterService] [api] Initializing dedicated connection pool with 10 connections
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[EnhancedCronSegmentProcessor] [api] 🎯 Enhanced CRON Segment Processor: Skipped (api mode - segment processing disabled)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Processing Service initialized successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SingleContactUpdaterService] [api] Connection pool initialized with 10 connections
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Connected to ClickHouse version: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Initializing ClickHouse database and tables...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Database 'evo_campaign' ensured
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Reconnected to ClickHouse with database 'evo_campaign'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating table 'evo_campaign.contact_events' with proper schema
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Table 'evo_campaign.contact_events' ensured with proper schema
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Contact events table creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating Kafka integration for ClickHouse...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - KAFKA_BROKERS_INTERNAL from env: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - this.config.kafka?.brokersInternal: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Using Kafka brokers for ClickHouse: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka Engine table 'evo_campaign.contact_events_kafka_queue' already points at the configured broker ('localhost:9092')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka queue table 'contact_events_kafka_queue' created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Materialized view 'contact_events_kafka_mv' created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Contact-events Kafka Engine table 'evo_campaign.contact_events_kafka_queue' is bound to broker 'localhost:9092'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Kafka integration for ClickHouse created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Kafka integration creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating segment computation tables...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating tracking materialized views...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Tracking materialized views created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ All segment computation tables created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Segment tables creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating Journey Trigger Queue for Temporal workflows...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - KAFKA_BROKERS_INTERNAL from env: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - this.config.kafka?.brokersInternal: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Using Kafka brokers for Journey Triggers: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka Engine table 'evo_campaign.journey_trigger_kafka_queue' already points at the configured broker ('localhost:9092')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka table for journey triggers created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Materialized view for journey triggers created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Journey-trigger Kafka Engine table is bound to broker 'localhost:9092'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Journey Trigger Queue infrastructure created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Journey trigger queue creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 📋 Tables in database 'evo_campaign': computed_property_assignments_v2, computed_property_state_index, computed_property_state_v2, contact_events, contact_events_kafka_mv, contact_events_kafka_queue, contact_group_assignments, events_to_journey_triggers_mv, group_contact_assignments, journey_trigger_kafka_queue, processed_computed_properties_v2, resolved_segment_state, updated_computed_property_state, updated_computed_property_state_v2_mv, updated_property_assignments_v2, updated_property_assignments_v2_mv
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Table evo_campaign.contact_events verified successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Table verification completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ ClickHouse client is properly set and ready for operations
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ ClickHouse instance g7efxj database initialization completed successfully
+{"timestamp":"2026-09-04T16:10:18.745Z","service":"api","level":"info","msg":"Nest application successfully started","context":"NestApplication"}
+{"timestamp":"2026-09-04T16:10:18.748Z","service":"api","level":"info","msg":"🌐 HTTP Server listening on port 3334","context":"Bootstrap"}
+{"timestamp":"2026-09-04T16:10:18.749Z","service":"api","level":"info","msg":"📖 API Documentation: http://localhost:<REDACTED>@clickhouse/client-common/dist/error/error.js:38:16)
+    at ClientRequest.onResponse (/app/node_modules/@clickhouse/client/dist/connection/node_base_connection.js:443:107)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+
+crm:
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQBrokerAdapter] [api] broker.boot
+{
+  "action": "broker.boot",
+  "broker": "rabbitmq"
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQBrokerAdapter] [api] broker.boot
+{
+  "action": "broker.boot",
+  "broker": "rabbitmq"
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[IdempotencyService] [api] idempotency.ready
+{
+  "action": "idempotency.ready",
+  "db": 4
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentSchedulerService] [api] 🎯 Segment Scheduler Service: Skipped (api mode - segment processing disabled)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentComputationConsumer] [api] Distributed processing disabled, skipping consumer initialization
+[Nest] 7  - 09/04/2026, 4:10:18 PM    WARN ;5;3m[SegmentResultsConsumer] [api] Could not initialize Kafka results consumer: Cannot read properties of undefined (reading 'name')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentResultsConsumer] [api] Results consumer started
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🎯 Initializing Segment System...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 📊 Run Mode: api
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] ⚡ Processing Mode: scheduled
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🗄️ Storage Mode: ClickHouse (fixed)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🔧 Computation Mode: ClickHouse (fixed)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] ✅ Segment System: API only enabled (processor handled by workers)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Initializing Processing Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Run Mode: api
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Queue Mode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Write Mode: ch-sync
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[QueueProcessorFactory] [api] Creating queue processor for mode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🎯 Segment computation mode: real-time (real-time: true, cron-job: false)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🔧 Services available - SegmentInvalidationService: NO, SegmentJobService: NO
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🆔 ClickHouseStorageProcessor using ClickHouse instance: g7efxj
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🆔 ClickHouse instance g7efxj onModuleInit called
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] 🔧 KafkaService onModuleInit called
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] 🔍 Config - QueueMode: direct, WriteMode: ch-sync
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] ❌ shouldUseKafka() returned false, skipping initialization
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RedisConsumerService] [api] Initializing Redis Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RedisConsumerService] [api] Redis Consumer not started. RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] 🚀 Initializing Kafka Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] 🔍 Current RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🎯 Segment computation mode: real-time (real-time: true, cron-job: false)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🔧 Services available - SegmentInvalidationService: YES, SegmentJobService: YES
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🆔 ClickHouseStorageProcessor using ClickHouse instance: g7efxj
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] ✅ StorageProcessor created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] Should start consumer: false, Queue is Kafka: false
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] Kafka Consumer not started - RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQConsumerService] [api] Initializing RabbitMQ Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQConsumerService] [api] RabbitMQ Consumer not started (not in correct mode)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[BatchProcessorService] [api] 🚀 Segment batch processing initialized - Target: < 30s for medium segments (1K-100K contacts)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SingleContactUpdaterService] [api] Initializing dedicated connection pool with 10 connections
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[EnhancedCronSegmentProcessor] [api] 🎯 Enhanced CRON Segment Processor: Skipped (api mode - segment processing disabled)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Processing Service initialized successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SingleContactUpdaterService] [api] Connection pool initialized with 10 connections
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Connected to ClickHouse version: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Initializing ClickHouse database and tables...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Database 'evo_campaign' ensured
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Reconnected to ClickHouse with database 'evo_campaign'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating table 'evo_campaign.contact_events' with proper schema
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Table 'evo_campaign.contact_events' ensured with proper schema
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Contact events table creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating Kafka integration for ClickHouse...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - KAFKA_BROKERS_INTERNAL from env: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - this.config.kafka?.brokersInternal: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Using Kafka brokers for ClickHouse: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka Engine table 'evo_campaign.contact_events_kafka_queue' already points at the configured broker ('localhost:9092')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka queue table 'contact_events_kafka_queue' created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Materialized view 'contact_events_kafka_mv' created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Contact-events Kafka Engine table 'evo_campaign.contact_events_kafka_queue' is bound to broker 'localhost:9092'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Kafka integration for ClickHouse created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Kafka integration creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating segment computation tables...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating tracking materialized views...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Tracking materialized views created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ All segment computation tables created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Segment tables creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating Journey Trigger Queue for Temporal workflows...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - KAFKA_BROKERS_INTERNAL from env: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - this.config.kafka?.brokersInternal: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Using Kafka brokers for Journey Triggers: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka Engine table 'evo_campaign.journey_trigger_kafka_queue' already points at the configured broker ('localhost:9092')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka table for journey triggers created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Materialized view for journey triggers created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Journey-trigger Kafka Engine table is bound to broker 'localhost:9092'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Journey Trigger Queue infrastructure created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Journey trigger queue creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 📋 Tables in database 'evo_campaign': computed_property_assignments_v2, computed_property_state_index, computed_property_state_v2, contact_events, contact_events_kafka_mv, contact_events_kafka_queue, contact_group_assignments, events_to_journey_triggers_mv, group_contact_assignments, journey_trigger_kafka_queue, processed_computed_properties_v2, resolved_segment_state, updated_computed_property_state, updated_computed_property_state_v2_mv, updated_property_assignments_v2, updated_property_assignments_v2_mv
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Table evo_campaign.contact_events verified successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Table verification completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ ClickHouse client is properly set and ready for operations
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ ClickHouse instance g7efxj database initialization completed successfully
+{"timestamp":"2026-09-04T16:10:18.745Z","service":"api","level":"info","msg":"Nest application successfully started","context":"NestApplication"}
+{"timestamp":"2026-09-04T16:10:18.748Z","service":"api","level":"info","msg":"🌐 HTTP Server listening on port 3334","context":"Bootstrap"}
+{"timestamp":"2026-09-04T16:10:18.749Z","service":"api","level":"info","msg":"📖 API Documentation: http://localhost:<REDACTED>@clickhouse/client-common/dist/error/error.js:38:16)
+    at ClientRequest.onResponse (/app/node_modules/@clickhouse/client/dist/connection/node_base_connection.js:443:107)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+
+auth:
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQBrokerAdapter] [api] broker.boot
+{
+  "action": "broker.boot",
+  "broker": "rabbitmq"
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQBrokerAdapter] [api] broker.boot
+{
+  "action": "broker.boot",
+  "broker": "rabbitmq"
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[IdempotencyService] [api] idempotency.ready
+{
+  "action": "idempotency.ready",
+  "db": 4
+}
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentSchedulerService] [api] 🎯 Segment Scheduler Service: Skipped (api mode - segment processing disabled)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentComputationConsumer] [api] Distributed processing disabled, skipping consumer initialization
+[Nest] 7  - 09/04/2026, 4:10:18 PM    WARN ;5;3m[SegmentResultsConsumer] [api] Could not initialize Kafka results consumer: Cannot read properties of undefined (reading 'name')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentResultsConsumer] [api] Results consumer started
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🎯 Initializing Segment System...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 📊 Run Mode: api
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] ⚡ Processing Mode: scheduled
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🗄️ Storage Mode: ClickHouse (fixed)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] 🔧 Computation Mode: ClickHouse (fixed)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SegmentModeManagerService] [api] ✅ Segment System: API only enabled (processor handled by workers)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Initializing Processing Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Run Mode: api
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Queue Mode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Write Mode: ch-sync
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[QueueProcessorFactory] [api] Creating queue processor for mode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🎯 Segment computation mode: real-time (real-time: true, cron-job: false)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🔧 Services available - SegmentInvalidationService: NO, SegmentJobService: NO
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🆔 ClickHouseStorageProcessor using ClickHouse instance: g7efxj
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🆔 ClickHouse instance g7efxj onModuleInit called
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] 🔧 KafkaService onModuleInit called
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] 🔍 Config - QueueMode: direct, WriteMode: ch-sync
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaService] [api] ❌ shouldUseKafka() returned false, skipping initialization
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RedisConsumerService] [api] Initializing Redis Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RedisConsumerService] [api] Redis Consumer not started. RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] 🚀 Initializing Kafka Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] 🔍 Current RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🎯 Segment computation mode: real-time (real-time: true, cron-job: false)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🔧 Services available - SegmentInvalidationService: YES, SegmentJobService: YES
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseStorageProcessor] [api] 🆔 ClickHouseStorageProcessor using ClickHouse instance: g7efxj
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] ✅ StorageProcessor created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] Should start consumer: false, Queue is Kafka: false
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[KafkaConsumerService] [api] Kafka Consumer not started - RunMode: api, QueueMode: direct
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQConsumerService] [api] Initializing RabbitMQ Consumer Service...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[RabbitMQConsumerService] [api] RabbitMQ Consumer not started (not in correct mode)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[BatchProcessorService] [api] 🚀 Segment batch processing initialized - Target: < 30s for medium segments (1K-100K contacts)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SingleContactUpdaterService] [api] Initializing dedicated connection pool with 10 connections
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[EnhancedCronSegmentProcessor] [api] 🎯 Enhanced CRON Segment Processor: Skipped (api mode - segment processing disabled)
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ProcessingService] [api] Processing Service initialized successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[SingleContactUpdaterService] [api] Connection pool initialized with 10 connections
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Connected to ClickHouse version: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Initializing ClickHouse database and tables...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Database 'evo_campaign' ensured
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Reconnected to ClickHouse with database 'evo_campaign'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating table 'evo_campaign.contact_events' with proper schema
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Table 'evo_campaign.contact_events' ensured with proper schema
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Contact events table creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating Kafka integration for ClickHouse...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - KAFKA_BROKERS_INTERNAL from env: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - this.config.kafka?.brokersInternal: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Using Kafka brokers for ClickHouse: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka Engine table 'evo_campaign.contact_events_kafka_queue' already points at the configured broker ('localhost:9092')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka queue table 'contact_events_kafka_queue' created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Materialized view 'contact_events_kafka_mv' created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Contact-events Kafka Engine table 'evo_campaign.contact_events_kafka_queue' is bound to broker 'localhost:9092'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Kafka integration for ClickHouse created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Kafka integration creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating segment computation tables...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating tracking materialized views...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Tracking materialized views created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ All segment computation tables created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Segment tables creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Creating Journey Trigger Queue for Temporal workflows...
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - KAFKA_BROKERS_INTERNAL from env: undefined
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 🔍 DEBUG - this.config.kafka?.brokersInternal: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Using Kafka brokers for Journey Triggers: localhost:9092
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka Engine table 'evo_campaign.journey_trigger_kafka_queue' already points at the configured broker ('localhost:9092')
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Kafka table for journey triggers created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Materialized view for journey triggers created
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] Journey-trigger Kafka Engine table is bound to broker 'localhost:9092'
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Journey Trigger Queue infrastructure created successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Journey trigger queue creation completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] 📋 Tables in database 'evo_campaign': computed_property_assignments_v2, computed_property_state_index, computed_property_state_v2, contact_events, contact_events_kafka_mv, contact_events_kafka_queue, contact_group_assignments, events_to_journey_triggers_mv, group_contact_assignments, journey_trigger_kafka_queue, processed_computed_properties_v2, resolved_segment_state, updated_computed_property_state, updated_computed_property_state_v2_mv, updated_property_assignments_v2, updated_property_assignments_v2_mv
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Table evo_campaign.contact_events verified successfully
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ Table verification completed
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ ClickHouse client is properly set and ready for operations
+[Nest] 7  - 09/04/2026, 4:10:18 PM     LOG ;5;3m[ClickHouseService] [api] ✅ ClickHouse instance g7efxj database initialization completed successfully
+{"timestamp":"2026-09-04T16:10:18.745Z","service":"api","level":"info","msg":"Nest application successfully started","context":"NestApplication"}
+{"timestamp":"2026-09-04T16:10:18.748Z","service":"api","level":"info","msg":"🌐 HTTP Server listening on port 3334","context":"Bootstrap"}
+{"timestamp":"2026-09-04T16:10:18.749Z","service":"api","level":"info","msg":"📖 API Documentation: http://localhost:<REDACTED>@clickhouse/client-common/dist/error/error.js:38:16)
+    at ClientRequest.onResponse (/app/node_modules/@clickhouse/client/dist/connection/node_base_connection.js:443:107)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+
+auth sidekiq:
+[evo-auth-entrypoint] RUN_MIGRATIONS=false — skipping migrations.
+INFO  2026-09-04T16:10:19.315Z pid=1 tid=21t: [auth] email-confirmation posture: open — source: SMTP_ADDRESS presence (derived)
+INFO  2026-09-04T16:10:19.323Z pid=1 tid=21t: [EvoExtensionPoints] loaded keys=[:auth_bridge_create_user, :auth_bridge_find_user_by_email, :auth_bridge_sign_in_user, :auth_bridge_sign_in_request, :auth_bridge_current_user, :auth_bridge_sign_out, :token_claims, :login_gate, :after_bootstrap, :extra_setup_steps] versions={auth_bridge: "1.1.0", token_claims: "1.0.0", login_gate: "1.0.0", after_bootstrap: "1.1.0", extra_setup_steps: "1.0.0"}
+INFO  2026-09-04T16:10:19.340Z pid=1 tid=21t: [L] #001
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #004
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #005
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #006
+INFO  2026-09-04T16:10:19.349Z pid=1 tid=21t: 📧 EvoAuth MAILER: Using SMTP delivery method
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Booted Rails 7.1.5.2 application in development environment
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Running in ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [x86_64-linux]
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: See LICENSE and the LGPL-3.0 for licensing details.
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
+INFO  2026-09-04T16:<REDACTED>@redis:6379/1"}
+INFO  2026-09-04T16:10:19.511Z pid=1 tid=21t: Sidekiq 8.0.7 connecting to Redis with options {size: 10, pool_name: "default", url: "redis://:REDACTED@redis:6379/1"}
+
+
+frontend:
+[evo-auth-entrypoint] RUN_MIGRATIONS=false — skipping migrations.
+INFO  2026-09-04T16:10:19.315Z pid=1 tid=21t: [auth] email-confirmation posture: open — source: SMTP_ADDRESS presence (derived)
+INFO  2026-09-04T16:10:19.323Z pid=1 tid=21t: [EvoExtensionPoints] loaded keys=[:auth_bridge_create_user, :auth_bridge_find_user_by_email, :auth_bridge_sign_in_user, :auth_bridge_sign_in_request, :auth_bridge_current_user, :auth_bridge_sign_out, :token_claims, :login_gate, :after_bootstrap, :extra_setup_steps] versions={auth_bridge: "1.1.0", token_claims: "1.0.0", login_gate: "1.0.0", after_bootstrap: "1.1.0", extra_setup_steps: "1.0.0"}
+INFO  2026-09-04T16:10:19.340Z pid=1 tid=21t: [L] #001
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #004
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #005
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #006
+INFO  2026-09-04T16:10:19.349Z pid=1 tid=21t: 📧 EvoAuth MAILER: Using SMTP delivery method
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Booted Rails 7.1.5.2 application in development environment
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Running in ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [x86_64-linux]
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: See LICENSE and the LGPL-3.0 for licensing details.
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
+INFO  2026-09-04T16:<REDACTED>@redis:6379/1"}
+INFO  2026-09-04T16:10:19.511Z pid=1 tid=21t: Sidekiq 8.0.7 connecting to Redis with options {size: 10, pool_name: "default", url: "redis://:REDACTED@redis:6379/1"}
+
+
+crm sidekiq:
+[evo-auth-entrypoint] RUN_MIGRATIONS=false — skipping migrations.
+INFO  2026-09-04T16:10:19.315Z pid=1 tid=21t: [auth] email-confirmation posture: open — source: SMTP_ADDRESS presence (derived)
+INFO  2026-09-04T16:10:19.323Z pid=1 tid=21t: [EvoExtensionPoints] loaded keys=[:auth_bridge_create_user, :auth_bridge_find_user_by_email, :auth_bridge_sign_in_user, :auth_bridge_sign_in_request, :auth_bridge_current_user, :auth_bridge_sign_out, :token_claims, :login_gate, :after_bootstrap, :extra_setup_steps] versions={auth_bridge: "1.1.0", token_claims: "1.0.0", login_gate: "1.0.0", after_bootstrap: "1.1.0", extra_setup_steps: "1.0.0"}
+INFO  2026-09-04T16:10:19.340Z pid=1 tid=21t: [L] #001
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #004
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #005
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #006
+INFO  2026-09-04T16:10:19.349Z pid=1 tid=21t: 📧 EvoAuth MAILER: Using SMTP delivery method
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Booted Rails 7.1.5.2 application in development environment
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Running in ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [x86_64-linux]
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: See LICENSE and the LGPL-3.0 for licensing details.
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
+INFO  2026-09-04T16:<REDACTED>@redis:6379/1"}
+INFO  2026-09-04T16:10:19.511Z pid=1 tid=21t: Sidekiq 8.0.7 connecting to Redis with options {size: 10, pool_name: "default", url: "redis://:REDACTED@redis:6379/1"}
+
+
+bot runtime:
+[evo-auth-entrypoint] RUN_MIGRATIONS=false — skipping migrations.
+INFO  2026-09-04T16:10:19.315Z pid=1 tid=21t: [auth] email-confirmation posture: open — source: SMTP_ADDRESS presence (derived)
+INFO  2026-09-04T16:10:19.323Z pid=1 tid=21t: [EvoExtensionPoints] loaded keys=[:auth_bridge_create_user, :auth_bridge_find_user_by_email, :auth_bridge_sign_in_user, :auth_bridge_sign_in_request, :auth_bridge_current_user, :auth_bridge_sign_out, :token_claims, :login_gate, :after_bootstrap, :extra_setup_steps] versions={auth_bridge: "1.1.0", token_claims: "1.0.0", login_gate: "1.0.0", after_bootstrap: "1.1.0", extra_setup_steps: "1.0.0"}
+INFO  2026-09-04T16:10:19.340Z pid=1 tid=21t: [L] #001
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #004
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #005
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #006
+INFO  2026-09-04T16:10:19.349Z pid=1 tid=21t: 📧 EvoAuth MAILER: Using SMTP delivery method
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Booted Rails 7.1.5.2 application in development environment
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Running in ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [x86_64-linux]
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: See LICENSE and the LGPL-3.0 for licensing details.
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
+INFO  2026-09-04T16:<REDACTED>@redis:6379/1"}
+INFO  2026-09-04T16:10:19.511Z pid=1 tid=21t: Sidekiq 8.0.7 connecting to Redis with options {size: 10, pool_name: "default", url: "redis://:REDACTED@redis:6379/1"}
+
+
+core:
+[evo-auth-entrypoint] RUN_MIGRATIONS=false — skipping migrations.
+INFO  2026-09-04T16:10:19.315Z pid=1 tid=21t: [auth] email-confirmation posture: open — source: SMTP_ADDRESS presence (derived)
+INFO  2026-09-04T16:10:19.323Z pid=1 tid=21t: [EvoExtensionPoints] loaded keys=[:auth_bridge_create_user, :auth_bridge_find_user_by_email, :auth_bridge_sign_in_user, :auth_bridge_sign_in_request, :auth_bridge_current_user, :auth_bridge_sign_out, :token_claims, :login_gate, :after_bootstrap, :extra_setup_steps] versions={auth_bridge: "1.1.0", token_claims: "1.0.0", login_gate: "1.0.0", after_bootstrap: "1.1.0", extra_setup_steps: "1.0.0"}
+INFO  2026-09-04T16:10:19.340Z pid=1 tid=21t: [L] #001
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #004
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #005
+WARN  2026-09-04T16:10:19.346Z pid=1 tid=21t: [L] #006
+INFO  2026-09-04T16:10:19.349Z pid=1 tid=21t: 📧 EvoAuth MAILER: Using SMTP delivery method
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Booted Rails 7.1.5.2 application in development environment
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Running in ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [x86_64-linux]
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: See LICENSE and the LGPL-3.0 for licensing details.
+INFO  2026-09-04T16:10:19.506Z pid=1 tid=21t: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
+INFO  2026-09-04T16:<REDACTED>@redis:6379/1"}
+INFO  2026-09-04T16:10:19.511Z pid=1 tid=21t: Sidekiq 8.0.7 connecting to Redis with options {size: 10, pool_name: "default", url: "redis://:REDACTED@redis:6379/1"}
