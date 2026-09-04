@@ -406,8 +406,5 @@ services:
 volumes:
   postgres_data: null
   redis_data: null
-  crm_bundle: null
-  crm_node_modules: null
-  crm_cache: null
   processor_logs: null
   clickhouse_data: null
