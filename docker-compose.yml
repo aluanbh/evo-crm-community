@@ -44,12 +44,12 @@ services:
       redis:
         condition: service_healthy
     command: 'bash -c "rm -f /rails/tmp/pids/server.pid && bundle exec rails s -p 3001 -b 0.0.0.0"'
-    healthcheck:
-      test: ["CMD", "ruby", "-e", "Net::HTTP.get(URI('http://localhost:3001/health'))"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 90s
+    # healthcheck:
+    #   test: ["CMD", "ruby", "-e", "Net::HTTP.get(URI('http://localhost:3001/health'))"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 90s
       # test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
       # interval: 30s
       # timeout: 10s
