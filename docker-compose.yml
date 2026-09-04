@@ -149,6 +149,9 @@ services:
       EVOLUTION_BASE_URL: 'http://evo-crm:3000'
       EVO_AUTH_BASE_URL: 'http://evo-auth:3001'
       AI_PROCESSOR_URL: 'http://evo-processor:8000'
+      AI_PROCESSOR_VERSION: '${AI_PROCESSOR_VERSION:-v1}'
+      JWT_SECRET_KEY: '${JWT_SECRET_KEY}'
+      JWT_ALGORITHM: '${JWT_ALGORITHM:-HS256}'
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:5555/health"]
       interval: 15s
