@@ -76,8 +76,8 @@ services:
       dockerfile: docker/Dockerfile
       args:
         BUNDLE_WITHOUT: ''
-        RAILS_ENV: development
-        RAILS_SERVE_STATIC_FILES: 'false'
+        RAILS_ENV: '${RAILS_ENV:-production}'
+        RAILS_SERVE_STATIC_FILES: '${RAILS_SERVE_STATIC_FILES:-true}'
     restart: unless-stopped
     env_file: .env
     environment:
