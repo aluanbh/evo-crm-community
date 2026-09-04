@@ -1,23 +1,4 @@
 services:
-  postgres:
-    image: 'pgvector/pgvector:pg16'
-    restart: unless-stopped
-    ports:
-      - '55434:5432'
-    volumes:
-      - 'postgres_data:/var/lib/postgresql/data'
-    environment:
-      POSTGRES_DB: '${POSTGRES_DATABASE:-evo_community}'
-      POSTGRES_USER: '${POSTGRES_USERNAME:-postgres}'
-      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-evoai_dev_password}'
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - 'pg_isready -U ${POSTGRES_USERNAME:-postgres}'
-      interval: 5s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
   redis:
     image: 'redis:alpine'
     restart: unless-stopped
@@ -25,70 +6,51 @@ services:
       - sh
       - '-c'
       - 'redis-server --requirepass ${REDIS_PASSWORD:-evoai_redis_pass} --appendonly yes'
-    ports:
-      - '56381:6379'
     volumes:
       - 'redis_data:/data'
     healthcheck:
-      test:
-        - CMD
-        - redis-cli
-        - '-a'
-        - '${REDIS_PASSWORD:-evoai_redis_pass}'
-        - ping
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-evoai_redis_pass}", "ping"]
       interval: 5s
       timeout: 5s
       retries: 10
+
   mailhog:
     image: mailhog/mailhog
     restart: unless-stopped
-    ports:
-      - '11025:1025'
-      - '18025:8025'
+
   rabbitmq:
     image: 'rabbitmq:3-alpine'
     restart: unless-stopped
-    ports:
-      - '55672:5672'
     healthcheck:
-      test:
-        - CMD
-        - rabbitmq-diagnostics
-        - '-q'
-        - ping
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 15s
+
   evo-auth:
     build:
       context: ./evo-auth-service-community
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - '3011:3001'
     env_file: .env
     environment:
       RAILS_ENV: '${RAILS_ENV:-development}'
       REDIS_URL: 'redis://:${REDIS_PASSWORD:-evoai_redis_pass}@redis:6379/1'
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: '${POSTGRES_HOST}'
+      POSTGRES_PORT: '${POSTGRES_PORT}'
       RUN_MIGRATIONS: 'false'
     depends_on:
-      postgres:
-        condition: service_healthy
       redis:
         condition: service_healthy
     command: 'bash -c "rm -f /rails/tmp/pids/server.pid && bundle exec rails db:prepare && bundle exec rails s -p 3001 -b 0.0.0.0"'
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - '-f'
-        - 'http://localhost:3001/health'
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 90s
+
   evo-auth-sidekiq:
     build:
       context: ./evo-auth-service-community
@@ -98,16 +60,16 @@ services:
     environment:
       RAILS_ENV: '${RAILS_ENV:-development}'
       REDIS_URL: 'redis://:${REDIS_PASSWORD:-evoai_redis_pass}@redis:6379/1'
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: '${POSTGRES_HOST}'
+      POSTGRES_PORT: '${POSTGRES_PORT}'
       RUN_MIGRATIONS: 'false'
     depends_on:
-      postgres:
-        condition: service_healthy
       redis:
         condition: service_healthy
     healthcheck:
       disable: true
     command: 'bundle exec sidekiq'
+
   evo-crm:
     build:
       context: ./evo-ai-crm-community
@@ -117,46 +79,32 @@ services:
         RAILS_ENV: development
         RAILS_SERVE_STATIC_FILES: 'false'
     restart: unless-stopped
-    ports:
-      - '3010:3000'
     env_file: .env
     environment:
       RAILS_ENV: '${RAILS_ENV:-development}'
       REDIS_URL: 'redis://:${REDIS_PASSWORD:-evoai_redis_pass}@redis:6379/0'
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: '${POSTGRES_HOST}'
+      POSTGRES_PORT: '${POSTGRES_PORT}'
       EVO_AUTH_SERVICE_URL: 'http://evo-auth:3001'
       EVO_AI_CORE_SERVICE_URL: 'http://evo-core:5555'
-      EVO_AI_ENCRYPTION_KEY: '${ENCRYPTION_KEY:-XoQPOBw2FrzjQS11utERG9qO2MsAnXFxlhIns_uUxRk=}'
+      EVO_AI_ENCRYPTION_KEY: '${ENCRYPTION_KEY}'
       BOT_RUNTIME_URL: 'http://evo-bot-runtime:8080'
-      BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET:-evo-bot-runtime-dev-secret}'
+      BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET}'
       BOT_RUNTIME_POSTBACK_BASE_URL: 'http://evo-crm:3000'
     depends_on:
-      postgres:
-        condition: service_healthy
       redis:
         condition: service_healthy
       evo-auth:
         condition: service_healthy
     entrypoint: docker/entrypoints/rails.sh
-    command:
-      - bundle
-      - exec
-      - rails
-      - s
-      - '-p'
-      - '3000'
-      - '-b'
-      - 0.0.0.0
+    command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - '-f'
-        - 'http://localhost:3000/health/live'
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health/live"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 120s
+
   evo-crm-sidekiq:
     build:
       context: ./evo-ai-crm-community
@@ -170,72 +118,55 @@ services:
     environment:
       RAILS_ENV: '${RAILS_ENV:-development}'
       REDIS_URL: 'redis://:${REDIS_PASSWORD:-evoai_redis_pass}@redis:6379/0'
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: '${POSTGRES_HOST}'
+      POSTGRES_PORT: '${POSTGRES_PORT}'
       EVO_AUTH_SERVICE_URL: 'http://evo-auth:3001'
       EVO_AI_CORE_SERVICE_URL: 'http://evo-core:5555'
-      EVO_AI_ENCRYPTION_KEY: '${ENCRYPTION_KEY:-XoQPOBw2FrzjQS11utERG9qO2MsAnXFxlhIns_uUxRk=}'
+      EVO_AI_ENCRYPTION_KEY: '${ENCRYPTION_KEY}'
       BOT_RUNTIME_URL: 'http://evo-bot-runtime:8080'
-      BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET:-evo-bot-runtime-dev-secret}'
+      BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET}'
       BOT_RUNTIME_POSTBACK_BASE_URL: 'http://evo-crm:3000'
       RUN_MIGRATIONS: 'false'
     depends_on:
-      postgres:
-        condition: service_healthy
       redis:
         condition: service_healthy
     healthcheck:
       disable: true
-    command:
-      - bundle
-      - exec
-      - sidekiq
-      - '-C'
-      - config/sidekiq.yml
+    command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+
   evo-core:
     image: 'evoapicloud/evo-ai-core-service-community:latest'
     restart: unless-stopped
-    ports:
-      - '5565:5555'
     env_file: .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: '5432'
-      DB_USER: '${POSTGRES_USERNAME:-postgres}'
-      DB_PASSWORD: '${POSTGRES_PASSWORD:-evoai_dev_password}'
-      DB_NAME: '${POSTGRES_DATABASE:-evo_community}'
+      DB_HOST: '${POSTGRES_HOST}'
+      DB_PORT: '${POSTGRES_PORT}'
+      DB_USER: '${POSTGRES_USERNAME}'
+      DB_PASSWORD: '${POSTGRES_PASSWORD}'
+      DB_NAME: '${POSTGRES_DATABASE}'
       DB_SSLMODE: disable
       PORT: '5555'
       EVOLUTION_BASE_URL: 'http://evo-crm:3000'
       EVO_AUTH_BASE_URL: 'http://evo-auth:3001'
       AI_PROCESSOR_URL: 'http://evo-processor:8000'
-    depends_on:
-      postgres:
-        condition: service_healthy
     healthcheck:
-      test:
-        - CMD
-        - wget
-        - '--no-verbose'
-        - '--tries=1'
-        - '--spider'
-        - 'http://127.0.0.1:5555/health'
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:5555/health"]
       interval: 15s
       timeout: 5s
       retries: 5
       start_period: 30s
+
   evo-processor:
     build:
       context: ./evo-ai-processor-community
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - '8011:8000'
     env_file: .env
     environment:
-      POSTGRES_CONNECTION_STRING: 'postgresql://${POSTGRES_USERNAME:-postgres}:${POSTGRES_PASSWORD:-evoai_dev_password}@postgres:5432/${POSTGRES_DATABASE:-evo_community}'
+      POSTGRES_CONNECTION_STRING: 'postgresql://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}'
       REDIS_HOST: redis
       REDIS_PORT: '6379'
-      REDIS_PASSWORD: '${REDIS_PASSWORD:-evoai_redis_pass}'
+      REDIS_PASSWORD: '${REDIS_PASSWORD}'
       REDIS_SSL: 'false'
       HOST: 0.0.0.0
       PORT: '8000'
@@ -245,59 +176,44 @@ services:
     volumes:
       - 'processor_logs:/app/logs'
     depends_on:
-      postgres:
-        condition: service_healthy
       redis:
         condition: service_healthy
       evo-auth:
         condition: service_healthy
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - '-f'
-        - 'http://localhost:8000/health'
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 30s
+
   evo-bot-runtime:
     build:
       context: ./evo-bot-runtime
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - '8092:8080'
     env_file: .env
     environment:
       LISTEN_ADDR: '0.0.0.0:8080'
-      REDIS_URL: 'redis://:${REDIS_PASSWORD:-evoai_redis_pass}@redis:6379'
+      REDIS_URL: 'redis://:${REDIS_PASSWORD}@redis:6379'
       AI_PROCESSOR_URL: 'http://evo-processor:8000'
-      BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET:-evo-bot-runtime-dev-secret}'
-      MEDIA_HOST_ALLOWLIST: '${MEDIA_HOST_ALLOWLIST:-localhost}'
+      BOT_RUNTIME_SECRET: '${BOT_RUNTIME_SECRET}'
+      MEDIA_HOST_ALLOWLIST: '${MEDIA_HOST_ALLOWLIST}'
     depends_on:
       redis:
         condition: service_healthy
       evo-processor:
         condition: service_healthy
     healthcheck:
-      test:
-        - CMD
-        - wget
-        - '--no-verbose'
-        - '--tries=1'
-        - '--spider'
-        - 'http://localhost:8080/health'
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
       interval: 15s
       timeout: 5s
       retries: 5
       start_period: 15s
+
   clickhouse:
     image: 'clickhouse/clickhouse-server:latest'
     restart: unless-stopped
-    ports:
-      - '18123:8123'
-      - '19000:9000'
     environment:
       CLICKHOUSE_USER: default
       CLICKHOUSE_PASSWORD: password
@@ -309,30 +225,21 @@ services:
         soft: 262144
         hard: 262144
     healthcheck:
-      test:
-        - CMD
-        - clickhouse-client
-        - '--user'
-        - default
-        - '--password'
-        - password
-        - '--query'
-        - 'SELECT 1'
+      test: ["CMD", "clickhouse-client", "--user", "default", "--password", "password", "--query", "SELECT 1"]
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 20s
+
   evo-flow:
     build:
       context: ./evo-flow-community
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - '3334:3334'
     command:
       - sh
       - '-c'
-      - "node -e 'const{Client}=require(\"pg\");const db=process.env.POSTGRES_DB_DATABASE;const c=new Client({host:process.env.POSTGRES_DB_HOST,port:+(process.env.POSTGRES_DB_PORT||5432),user:process.env.POSTGRES_DB_USERNAME,password:process.env.POSTGRES_DB_PASSWORD,database:\"postgres\"});c.connect().then(()=>c.query(\"CREATE DATABASE \"+db)).then(()=>console.log(\"[init] created \"+db)).catch(e=>console.log(\"[init] \"+(e.code===\"42P04\"?\"db already exists\":e.message))).finally(()=>c.end());'\nnode_modules/.bin/typeorm migration:run -d dist/database/ormconfig.js || echo \"[init] migration:run failed (continuing)\"\nexec node dist/main.js\n"
+      - "node -e 'const{Client}=require(\"pg\");const db=process.env.POSTGRES_DB_DATABASE;const c=new Client({host:process.env.POSTGRES_DB_HOST,port:+(process.env.POSTGRES_DB_PORT),user:process.env.POSTGRES_DB_USERNAME,password:process.env.POSTGRES_DB_PASSWORD,database:\"postgres\"});c.connect().then(()=>c.query(\"CREATE DATABASE \"+db)).then(()=>console.log(\"[init] created \"+db)).catch(e=>console.log(\"[init] \"+(e.code===\"42P04\"?\"db already exists\":e.message))).finally(()=>c.end());'\nnode_modules/.bin/typeorm migration:run -d dist/database/ormconfig.js || echo \"[init] migration:run failed (continuing)\"\nexec node dist/main.js\n"
     environment:
       NODE_ENV: development
       RUN_MODE: api
@@ -342,7 +249,7 @@ services:
       PORT: '3334'
       BROKER_TYPE: rabbitmq
       RABBITMQ_URL: 'amqp://rabbitmq:5672'
-      AUTH_APIKEY_INTEGRATION_LOCAL: '${AUTH_APIKEY_INTEGRATION_LOCAL:-evoflow-dev-key}'
+      AUTH_APIKEY_INTEGRATION_LOCAL: '${AUTH_APIKEY_INTEGRATION_LOCAL}'
       EVO_AUTH_SERVICE_URL: 'http://evo-auth:3001'
       EVO_AUTH_VALIDATE_TOKEN_ENDPOINT: /api/v1/auth/validate
       CLICKHOUSE_HOST: clickhouse
@@ -353,58 +260,49 @@ services:
       CLICKHOUSE_TABLE: contact_events
       REDIS_HOST: redis
       REDIS_PORT: '6379'
-      REDIS_PASSWORD: '${REDIS_PASSWORD:-evoai_redis_pass}'
+      REDIS_PASSWORD: '${REDIS_PASSWORD}'
       REDIS_DB: '4'
-      POSTGRES_DB_HOST: postgres
-      POSTGRES_DB_PORT: '5432'
-      POSTGRES_DB_USERNAME: '${POSTGRES_USERNAME:-postgres}'
-      POSTGRES_DB_PASSWORD: '${POSTGRES_PASSWORD:-evoai_dev_password}'
+      POSTGRES_DB_HOST: '${POSTGRES_HOST}'
+      POSTGRES_DB_PORT: '${POSTGRES_PORT}'
+      POSTGRES_DB_USERNAME: '${POSTGRES_USERNAME}'
+      POSTGRES_DB_PASSWORD: '${POSTGRES_PASSWORD}'
       POSTGRES_DB_DATABASE: evo_campaign
       EVOAI_CRM_BASE_URL: 'http://evo-crm:3000'
-      EVOAI_CRM_API_TOKEN: '${EVOAI_CRM_API_TOKEN:-6e10e689-58ce-4416-bf0d-f5818bf2dcf8}'
+      EVOAI_CRM_API_TOKEN: '${EVOAI_CRM_API_TOKEN}'
       LOG_LEVEL: log
     depends_on:
       clickhouse:
-        condition: service_healthy
-      postgres:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
       redis:
         condition: service_healthy
+
   evo-frontend:
     build:
       context: ./evo-ai-frontend-community
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      VITE_API_URL: '${VITE_API_URL:-http://localhost:3010}'
-      VITE_AUTH_API_URL: '${VITE_AUTH_API_URL:-http://localhost:3011}'
-      VITE_WS_URL: '${VITE_WS_URL:-http://localhost:3010}'
-      VITE_EVOAI_API_URL: '${VITE_EVOAI_API_URL:-http://localhost:5565}'
-      VITE_AGENT_PROCESSOR_URL: '${VITE_AGENT_PROCESSOR_URL:-http://localhost:8011}'
-      VITE_EVOFLOW_API_URL: '${VITE_EVOFLOW_API_URL:-http://localhost:3334}'
-    ports:
-      - '5173:80'
+      VITE_API_URL: '${VITE_API_URL}'
+      VITE_AUTH_API_URL: '${VITE_AUTH_API_URL}'
+      VITE_WS_URL: '${VITE_WS_URL}'
+      VITE_EVOAI_API_URL: '${VITE_EVOAI_API_URL}'
+      VITE_AGENT_PROCESSOR_URL: '${VITE_AGENT_PROCESSOR_URL}'
+      VITE_EVOFLOW_API_URL: '${VITE_EVOFLOW_API_URL}'
     depends_on:
       evo-auth:
         condition: service_healthy
       evo-crm:
         condition: service_healthy
     healthcheck:
-      test:
-        - CMD
-        - wget
-        - '--no-verbose'
-        - '--tries=1'
-        - '--spider'
-        - 'http://127.0.0.1:80/health'
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:80/health"]
       interval: 15s
       timeout: 5s
       retries: 3
       start_period: 15s
+
 volumes:
-  postgres_data: null
   redis_data: null
   processor_logs: null
   clickhouse_data: null
