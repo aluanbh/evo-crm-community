@@ -45,11 +45,12 @@ services:
         condition: service_healthy
     command: 'bash -c "rm -f /rails/tmp/pids/server.pid && bundle exec rails s -p 3001 -b 0.0.0.0"'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 90s
+      disable: true
+      # test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      # interval: 30s
+      # timeout: 10s
+      # retries: 5
+      # start_period: 90s
 
   evo-auth-sidekiq:
     build:
