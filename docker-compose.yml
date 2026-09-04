@@ -78,7 +78,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: 'bash -c "rm -f /rails/tmp/pids/server.pid && bundle install && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails s -p 3001 -b 0.0.0.0"'
+    command: 'bash -c "rm -f /rails/tmp/pids/server.pid && bundle exec rails db:prepare && bundle exec rails s -p 3001 -b 0.0.0.0"'
     healthcheck:
       test:
         - CMD
@@ -107,7 +107,7 @@ services:
         condition: service_healthy
     healthcheck:
       disable: true
-    command: 'bash -c "bundle install && bundle exec sidekiq"'
+    command: 'bundle exec sidekiq'
   evo-crm:
     build:
       context: ./evo-ai-crm-community
